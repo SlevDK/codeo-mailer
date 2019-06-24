@@ -14,12 +14,3 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/v1/account/create', 'Api\AuthController@register');
-
-// Authorized api requests
-Route::middleware('auth:api')->group(function() {
-
-
-
-});
-
