@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/account/create', 'Api\AuthController@register');
+Route::post('/account/create', 'AuthController@register');
 Route::post('/account/token-obtain', 'AuthController@login');
 
 // Authorized api requests
