@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Requests\Api\Auth\LoginRequest;
-use App\Http\Requests\Api\Auth\RegisterRequest;
+use App\Http\Requests\Api\v1\Auth\LoginRequest;
+use App\Http\Requests\Api\v1\Auth\RegisterRequest;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;

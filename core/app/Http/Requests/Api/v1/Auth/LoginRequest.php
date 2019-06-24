@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Auth;
+namespace App\Http\Requests\Api\v1\Auth;
 
 use Dotenv\Exception\ValidationException;
 use Illuminate\Contracts\Validation\Validator;

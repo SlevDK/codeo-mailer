@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Auth;
+namespace App\Http\Requests\Api\v1\Auth;
 
 use App\Exceptions\CustomValidationException;
 use Illuminate\Contracts\Validation\Validator;
