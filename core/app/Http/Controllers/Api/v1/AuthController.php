@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Exceptions\Api\AuthorizationException;
 use App\Http\Requests\Api\v1\Auth\LoginRequest;
 use App\Http\Requests\Api\v1\Auth\RegisterRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
@@ -43,16 +45,20 @@ class AuthController extends Controller
      *
      * @param LoginRequest $request
      * @return Response
-     * @throws ValidationException
+     * @throws AuthorizationException
      */
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->input('email'))
-            ->firstOrFail();
+        try {
+            $user = User::where('email', $request->input('email'))
+                ->firstOrFail();
 
-        if(!Hash::check($request->input('password'), $user->password))
-            throw $request->customValidationException();
-
+            if(!Hash::check($request->input('password'), $user->password))
+                throw new AuthorizationException('');
+        } catch (ModelNotFoundException $e) {
+            // catch non exists email here, better for AuthException
+            throw new AuthorizationException('');
+        }
 
         return $this->sendLoginResponse($user);
     }

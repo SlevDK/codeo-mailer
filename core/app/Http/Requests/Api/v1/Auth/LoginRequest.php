@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Api\v1\Auth;
 
-use Dotenv\Exception\ValidationException;
+use App\Exceptions\Api\AlreadyExistException;
+use App\Exceptions\Api\ValidationException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class LoginRequest extends FormRequest
 {
@@ -26,8 +28,21 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'exists:users'],
-            'password' => ['required']
+            'email'     => ['required', 'email'],
+            'password'  => ['required']
+        ];
+    }
+
+    /**
+     * Custom validation messages
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.required'    => 'Email required',
+            'password.required' => 'Password required',
         ];
     }
 
@@ -35,25 +50,18 @@ class LoginRequest extends FormRequest
      * Reloaded validation exception
      *
      * @param Validator $validator
+     * @throws ValidationException
      * @throws \Illuminate\Validation\ValidationException
      */
     protected function failedValidation(Validator $validator)
     {
-        throw $this->customValidationException();
-    }
+        // errors during validation
+        $errors = $validator->errors()->toArray();
 
-    /**
-     * Return validation exception with custom message
-     *
-     * @param array $errors
-     * @return \Illuminate\Validation\ValidationException
-     */
-    public function customValidationException(array $errors = [])
-    {
-        return \Illuminate\Validation\ValidationException::withMessages([
-            "non_field_errors" => [
-                "Unable to log in with provided credentials."
-            ]
-        ]);
+        // failed array is empty
+        if(empty($errors))
+            parent::failedValidation($validator);
+
+        throw new ValidationException(array_shift($errors)[0]);
     }
 }

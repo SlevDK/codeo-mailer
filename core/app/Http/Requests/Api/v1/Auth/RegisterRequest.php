@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\v1\Auth;
 
+use App\Exceptions\Api\AlreadyExistException;
+use App\Exceptions\Api\ValidationException;
 use App\Exceptions\CustomValidationException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -27,9 +29,23 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => ['required', 'string', 'min:4', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:6', 'max:255']
+            'username'  => ['required', 'string', 'min:4', 'max:255'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'min:6', 'max:255']
+        ];
+    }
+
+    /**
+     * Custom validation messages
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'username.required' => 'Username required',
+            'email.required'    => 'Email required',
+            'password.required' => 'Password required'
         ];
     }
 
@@ -37,31 +53,27 @@ class RegisterRequest extends FormRequest
      * Reloaded validation exception
      *
      * @param Validator $validator
+     * @throws AlreadyExistException
+     * @throws ValidationException
      * @throws \Illuminate\Validation\ValidationException
-     * @throws CustomValidationException
      */
     protected function failedValidation(Validator $validator)
     {
-        $validation_errors = $validator->failed();
+        // failed fields
+        $failed = $validator->failed();
+        $first = array_shift($failed);
 
-        if(isset($validation_errors['email']['Unique']))
-            throw $this->customValidationException([
-                'code' => 33,
-                'message' => 'User with provided username/email already exists'
-            ]);
+        // failed array is empty
+        if(!$first)
+            parent::failedValidation($validator);
 
-        parent::failedValidation($validator);
-    }
+        // if user already exists (`unique` trigger)
+        if(isset($first['Unique']))
+            throw new AlreadyExistException('User with username/email already exists');
 
-    /**
-     * Return validation exception with custom message
-     *
-     * @param array $errors
-     * @return CustomValidationException
-     */
-    public function customValidationException(array $errors = [])
-    {
-        $ex = new CustomValidationException('');
-        return $ex->withErrors($errors);
+        // errors during validation
+        $errors = $validator->errors()->toArray();
+
+        throw new ValidationException(array_shift($errors)[0]);
     }
 }

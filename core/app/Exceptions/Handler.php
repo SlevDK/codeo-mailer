@@ -2,10 +2,24 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Api\AlreadyExistException;
+use App\Exceptions\Api\ApiBaseException;
+use App\Exceptions\Api\AuthorizationException;
+use App\Exceptions\Api\BadRequestException;
+use App\Exceptions\Api\ErrorException;
+use App\Exceptions\Api\NotFoundException;
+use App\Exceptions\Api\UnauthorizedException;
+use App\Exceptions\Api\ValidationException;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException as AuthorizException;
+use Illuminate\Validation\ValidationException as ValidateException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 class Handler extends ExceptionHandler
 {
@@ -15,7 +29,12 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        AlreadyExistException::class,
+        AuthorizationException::class,
+        BadRequestException::class,
+        NotFoundException::class,
+        UnauthorizedException::class,
+        ValidationException::class
     ];
 
     /**
@@ -29,10 +48,35 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * A list of the regular exceptions, that associated with ApiBaseException
+     * ['baseExClass' => 'apiTwinkClass']
+     *
+     * Ordering matters! Parent must be under child:
+     * (n)      NotFoundHttpException
+     * (n + 1)  HttpException
+     *
+     * @var array
+     *
+     * TODO:
+     *      Authentication vs Authorization
+     */
+    protected $assocExceptionList = [
+        AuthenticationException::class  => AuthorizationException::class,
+        AuthorizException::class        => UnauthorizedException::class,
+        ModelNotFoundException::class   => NotFoundException::class,
+        NotFoundHttpException::class    => NotFoundException::class,
+        BadRequestHttpException::class  => BadRequestException::class,
+        HttpException::class            => BadRequestException::class,
+        MethodNotAllowedException::class => BadRequestException::class,
+        ValidateException::class        => ValidationException::class,
+    ];
+
+    /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -42,16 +86,51 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception $exception
      * @return \Illuminate\Http\Response
+     * @throws ErrorException
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof ValidationException || $exception instanceof CustomValidationException) {
-            return response($exception->errors(), 200);
+        $e = $exception;
+
+        /** Auth exception response has unique format*/
+        if($e instanceof AuthorizationException) {
+            return response($e->failAuthMessage, $e->responseHttpCode);
         }
 
+        /** Handle all api-based exceptions */
+        if($e instanceof ApiBaseException) {
+            return response([
+                'code'      => $e->responseErrorCode,
+                'message'   => ($e->getMessage())?: $e->standardMessage
+            ], $e->responseHttpCode);
+        }
+
+        if($request->expectsJson())
+            $this->catchNonApiExceptions($e);
+
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Catch and convert non ApiBaseException objects
+     *
+     * @param Exception $exception
+     * @throws ErrorException
+     */
+    protected function catchNonApiExceptions(Exception $exception)
+    {
+        $e = $exception;
+
+        foreach($this->assocExceptionList as $baseEx => $apiTwinkEx) {
+            if($e instanceof $baseEx) {
+                throw new $apiTwinkEx($e->getMessage());
+            }
+        }
+
+        // If exception not in associative list
+        throw new ErrorException('Unprocessed error');
     }
 }

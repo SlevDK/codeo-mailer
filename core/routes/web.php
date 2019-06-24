@@ -19,6 +19,3 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-// Api login
-Route::post('/api-token-obtain/', 'Api\AuthController@login');
