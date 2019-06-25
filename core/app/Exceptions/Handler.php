@@ -13,6 +13,8 @@ use App\Exceptions\Api\ValidationException;
 use Exception;
 use Illuminate\Auth\AuthenticationException as AuthentException;
 use Illuminate\Auth\Access\AuthorizationException as AuthorizException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException as ValidateException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -86,9 +88,9 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param \Exception $exception
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws ErrorException
      */
     public function render($request, Exception $exception)
@@ -100,7 +102,16 @@ class Handler extends ExceptionHandler
             return response($e->failAuthMessage, $e->responseHttpCode);
         }
 
-
+        /**
+         * NotFound exception sometimes has too much info
+         * Let's print only standard message
+         */
+        if($e instanceof NotFoundException) {
+            return response([
+                'code'      => $e->responseErrorCode,
+                'message'   => $e->standardMessage
+            ], $e->responseHttpCode);
+        }
 
         /** Handle all api-based exceptions */
         if($e instanceof ApiBaseException) {
