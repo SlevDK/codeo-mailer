@@ -63,7 +63,7 @@ class Handler extends ExceptionHandler
      *      Authentication vs Authorization
      */
     protected $assocExceptionList = [
-        AuthentException::class         => AuthenticationException::class,
+        AuthentException::class         => UnauthorizedException::class,
         AuthorizException::class        => UnauthorizedException::class,
         ModelNotFoundException::class   => NotFoundException::class,
         NotFoundHttpException::class    => NotFoundException::class,
