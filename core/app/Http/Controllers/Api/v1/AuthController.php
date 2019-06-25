@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Exceptions\Api\AuthorizationException;
+use App\Exceptions\Api\AuthenticationException;
 use App\Http\Requests\Api\v1\Auth\LoginRequest;
 use App\Http\Requests\Api\v1\Auth\RegisterRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
-use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +44,7 @@ class AuthController extends Controller
      *
      * @param LoginRequest $request
      * @return Response
-     * @throws AuthorizationException
+     * @throws AuthenticationException
      */
     public function login(LoginRequest $request)
     {
@@ -54,10 +53,10 @@ class AuthController extends Controller
                 ->firstOrFail();
 
             if(!Hash::check($request->input('password'), $user->password))
-                throw new AuthorizationException('');
+                throw new AuthenticationException('');
         } catch (ModelNotFoundException $e) {
             // catch non exists email here, better for AuthException
-            throw new AuthorizationException('');
+            throw new AuthenticationException('');
         }
 
         return $this->sendLoginResponse($user);

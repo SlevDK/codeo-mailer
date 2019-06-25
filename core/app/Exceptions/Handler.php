@@ -4,14 +4,14 @@ namespace App\Exceptions;
 
 use App\Exceptions\Api\AlreadyExistException;
 use App\Exceptions\Api\ApiBaseException;
-use App\Exceptions\Api\AuthorizationException;
+use App\Exceptions\Api\AuthenticationException;
 use App\Exceptions\Api\BadRequestException;
 use App\Exceptions\Api\ErrorException;
 use App\Exceptions\Api\NotFoundException;
 use App\Exceptions\Api\UnauthorizedException;
 use App\Exceptions\Api\ValidationException;
 use Exception;
-use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\AuthenticationException as AuthentException;
 use Illuminate\Auth\Access\AuthorizationException as AuthorizException;
 use Illuminate\Validation\ValidationException as ValidateException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -30,7 +30,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         AlreadyExistException::class,
-        AuthorizationException::class,
+        AuthenticationException::class,
         BadRequestException::class,
         NotFoundException::class,
         UnauthorizedException::class,
@@ -61,7 +61,7 @@ class Handler extends ExceptionHandler
      *      Authentication vs Authorization
      */
     protected $assocExceptionList = [
-        AuthenticationException::class  => AuthorizationException::class,
+        AuthentException::class         => AuthenticationException::class,
         AuthorizException::class        => UnauthorizedException::class,
         ModelNotFoundException::class   => NotFoundException::class,
         NotFoundHttpException::class    => NotFoundException::class,
@@ -96,9 +96,11 @@ class Handler extends ExceptionHandler
         $e = $exception;
 
         /** Auth exception response has unique format*/
-        if($e instanceof AuthorizationException) {
+        if($e instanceof AuthenticationException) {
             return response($e->failAuthMessage, $e->responseHttpCode);
         }
+
+
 
         /** Handle all api-based exceptions */
         if($e instanceof ApiBaseException) {

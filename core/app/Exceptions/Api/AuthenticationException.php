@@ -4,7 +4,7 @@ namespace App\Exceptions\Api;
 
 use Throwable;
 
-class AuthorizationException extends ApiBaseException
+class AuthenticationException extends ApiBaseException
 {
     /** @var mixed Message for fail auth */
     public $failAuthMessage;
