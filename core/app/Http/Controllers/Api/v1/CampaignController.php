@@ -23,7 +23,11 @@ class CampaignController extends Controller
             ->status(request()->input('status'))
             ->paginate((intval(request()->limit) > 0)? intval(request()->limit) : 20);
 
-        return response()->json(new CampaignResourceCollection($campaigns), 200);
+        return response([
+            'status' => 20,
+            'message' => 'Success',
+            'payload' => new CampaignResourceCollection($campaigns)
+        ], 200);
     }
 
     /**
