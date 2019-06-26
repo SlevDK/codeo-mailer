@@ -15,10 +15,19 @@ class Campaign extends Model
     protected $guarded = ['id'];
 
     /** @var array Props that can be mass assigment */
-    protected $fillable = ['user_id', 'name', 'note', 'status', 'emails_total_count', 'email_processed_count'];
+    protected $fillable = [
+        'user_id', 'name', 'note', 'status', 'emails_total_count', 'email_processed_count'
+    ];
 
     /** @var array Model dates */
-    protected $dates = ['start_time', 'total_time', 'created_at', 'updated_at'];
+    protected $dates = [
+        'start_time', 'total_time', 'created_at', 'updated_at'
+    ];
+
+    /** @var array Campaign permitted statuses */
+    protected $permittedStatuses = [
+        'active', 'paused', 'finished', 'stopping', 'draft', 'archive'
+    ];
 
     /**
      * Campaign owner
@@ -41,6 +50,34 @@ class Campaign extends Model
     }
 
     /**
+     * Own by (user id) scope
+     *
+     * @param $query
+     * @param int $id
+     * @return mixed
+     */
+    public function scopeOwnBy($query, $id)
+    {
+        return $query->where('user_id', $id);
+    }
+
+    /**
+     * (Campaign) status scope
+     *
+     * @param $query
+     * @param string $status
+     * @return mixed
+     */
+    public function scopeStatus($query, $status)
+    {
+        // like 'all'
+        if(!in_array($status, $this->permittedStatuses))
+            return $query;
+
+        return $query->where('status', $status);
+    }
+
+    /**
      * Create new campaign
      *
      * @param array $campaignData
@@ -51,7 +88,6 @@ class Campaign extends Model
         $campaignData['user_id'] = auth('api')->id();
 
         $model = self::create($campaignData);
-        Log::debug($model);
 
         return $model;
     }
