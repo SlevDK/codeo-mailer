@@ -26,9 +26,7 @@ class Campaign extends JsonResource
             'emails_total_count'    => $this->emails_total_count,
             'email_processed_count' => $this->email_processed_count,
 
-            'mails' => [
-
-            ]
+            'mails' => new MailCollection($this->mails)
         ];
     }
 }
