@@ -21,7 +21,10 @@ Route::post('/account/token-obtain', 'AuthController@login');
 Route::middleware('auth:api')->group(function() {
 
     Route::get('/manager/campaigns', 'CampaignController@index');
-    Route::apiResource('/manager/campaign', 'CampaignController', ['except' => ['index']]);
+    Route::apiResource('/manager/campaign', 'CampaignController', ['except' => ['index']]); // should be campaigns?
+
+    Route::post('/manager/campaign/{id}/mails', 'MailController@store');
+    Route::apiResource('/manager/mails', 'MailController', ['except' => ['index', 'store']]);
 
 });
 

@@ -21,12 +21,6 @@ class CreateCampaignsTable extends Migration
             $table->string('note')->nullable();
             $table->string('status')->default('draft');
 
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('total_time')->nullable();
-
-            $table->integer('emails_total_count')->default(0);
-            $table->integer('email_processed_count')->default(0);
-
             $table->timestamps();
         });
     }
