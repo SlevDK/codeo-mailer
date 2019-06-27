@@ -22,7 +22,7 @@ class Campaign extends Model
     ];
 
     /** @var array Campaign permitted statuses */
-    protected $permittedStatuses = [
+    protected const permittedStatuses = [
         'active', 'paused', 'finished', 'stopping', 'draft', 'archive'
     ];
 
@@ -68,7 +68,7 @@ class Campaign extends Model
     public function scopeStatus($query, $status)
     {
         // like 'all'
-        if(!in_array($status, $this->permittedStatuses))
+        if(!in_array($status, self::permittedStatuses))
             return $query;
 
         return $query->where('status', $status);
@@ -101,5 +101,15 @@ class Campaign extends Model
         unset($fillable[array_search('user_id', $fillable)]);
 
         return $fillable;
+    }
+
+    /**
+     * Return permitted statuses array
+     *
+     * @return array
+     */
+    public static function permittedStatuses()
+    {
+        return static::permittedStatuses;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Requests\Api\v1\Campaigns\CampaignStoreRequest;
+use App\Http\Requests\Api\v1\Campaigns\CampaignUpdateRequest;
 use App\Models\Campaign;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -33,11 +35,11 @@ class CampaignController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CampaignStoreRequest $request
      * @return CampaignResource
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(CampaignStoreRequest $request)
     {
         $this->authorize('create', Campaign::class);
 
@@ -71,12 +73,12 @@ class CampaignController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param CampaignUpdateRequest $request
      * @param Campaign $campaign
      * @return CampaignResource
      * @throws AuthorizationException
      */
-    public function update(Request $request, Campaign $campaign)
+    public function update(CampaignUpdateRequest $request, Campaign $campaign)
     {
         $this->authorize('update', $campaign);
 
