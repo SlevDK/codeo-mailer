@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Topics;
+namespace App\Http\Requests\Api\v1\Header;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Log;
 
-class TopicUpdateRequest extends FormRequest
+class HeaderUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class TopicUpdateRequest extends FormRequest
             'data'  => [
                 'required', 'json',
                 function($attr, $value, $fail) {
-                    return $this->checkTopicData($value, $fail);
+                    return $this->checkHeaderData($value, $fail);
                 }
             ]
         ];
@@ -42,12 +42,12 @@ class TopicUpdateRequest extends FormRequest
      * @param $fail
      * @return mixed
      */
-    protected function checkTopicData($data, $fail)
+    public function checkHeaderData($data, $fail)
     {
-        $topic = json_decode($data, true);
-        $err_msg = 'Topic data is incorrect';
+        $headers = json_decode($data, true);
+        $err_msg = 'Header data is incorrect';
 
-        foreach($topic as $entity) {
+        foreach($headers as $entity) {
 
             // check 'content' -> present, 0 < len(content) < 255
             if(!isset($entity['content']) || strlen($entity['content']) < 1 || strlen($entity['content']) > 255)

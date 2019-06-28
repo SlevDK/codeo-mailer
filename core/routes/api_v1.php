@@ -32,5 +32,8 @@ Route::middleware('auth:api')->group(function() {
     Route::get('/manager/mails/{mail_id}/body', 'BodyController@show');
     Route::put('/manager/mails/{id}/body', 'BodyController@update');
 
+    Route::get('/manager/mails/{mail_id}/headers', 'HeaderController@show');
+    Route::put('/manager/mails/{id}/headers', 'HeaderController@update');
+
 });
 

@@ -34,7 +34,7 @@ class Topic extends Model
      * Create mail topic
      *
      * @param Mail $mail
-     * @return mixed
+     * @return Topic
      */
     public static function initTopic(Mail $mail)
     {

@@ -52,6 +52,16 @@ class Mail extends Model
     }
 
     /**
+     * Mail headers
+     *
+     * @return HasOne
+     */
+    public function header()
+    {
+        return $this->hasOne(Header::class, 'mail_id');
+    }
+
+    /**
      * Create new mail
      *
      * @param Campaign $campaign
