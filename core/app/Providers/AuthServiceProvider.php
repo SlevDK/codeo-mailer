@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Guards\TokenJWTGuard;
+use App\Models\Body;
 use App\Models\Campaign;
 use App\Models\Mail;
 use App\Models\Topic;
+use App\Policies\BodyPolicy;
 use App\Policies\CampaignPolicy;
 use App\Policies\MailPolicy;
 use App\Policies\TopicPolicy;
@@ -22,7 +24,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Campaign::class => CampaignPolicy::class,
         Mail::class     => MailPolicy::class,
-        Topic::class    => TopicPolicy::class
+        Topic::class    => TopicPolicy::class,
+        Body::class     => BodyPolicy::class,
     ];
 
     /**
