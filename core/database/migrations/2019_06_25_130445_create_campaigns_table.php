@@ -16,12 +16,18 @@ class CreateCampaignsTable extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->string('name')->default('');
             $table->string('note')->nullable();
             $table->string('status')->default('draft');
 
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

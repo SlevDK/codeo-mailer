@@ -16,12 +16,18 @@ class CreateMailsTable extends Migration
         Schema::create('mails', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('campaign_id');
+            $table->bigInteger('campaign_id')->unsigned();
             $table->string('name')->default('');
             $table->integer('order')->default(0);
             $table->boolean('enabled')->default(false);
 
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
+            $table->foreign('campaign_id')
+                ->references('id')
+                ->on('campaigns')
+                ->onDelete('cascade');
         });
     }
 
