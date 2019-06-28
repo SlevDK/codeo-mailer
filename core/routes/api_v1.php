@@ -26,5 +26,8 @@ Route::middleware('auth:api')->group(function() {
     Route::post('/manager/campaign/{id}/mails', 'MailController@store');
     Route::apiResource('/manager/mails', 'MailController', ['except' => ['index', 'store']]);
 
+    Route::get('/manager/mails/{mail_id}/topics', 'TopicController@show');
+    Route::put('/manager/mails/{id}/topics', 'TopicController@update');
+
 });
 

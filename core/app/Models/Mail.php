@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Mail extends Model
 {
@@ -31,13 +32,23 @@ class Mail extends Model
     }
 
     /**
+     * Mail topic
+     *
+     * @return HasOne
+     */
+    public function topic()
+    {
+        return $this->hasOne(Topic::class, 'mail_id');
+    }
+
+    /**
      * Create new mail
      *
      * @param Campaign $campaign
-     * @param $data
+     * @param array $data
      * @return Mail
      */
-    public static function initMail(Campaign $campaign, $data)
+    public static function initMail(Campaign $campaign, array $data)
     {
         $mail = self::create([
             'campaign_id' => $campaign->id,
