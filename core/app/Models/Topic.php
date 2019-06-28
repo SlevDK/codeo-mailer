@@ -40,7 +40,7 @@ class Topic extends Model
     {
         $topic = self::create([
             'mail_id'   => $mail->id,
-            'data'      => []
+            'data'      => '""'
         ]);
 
         return $topic;

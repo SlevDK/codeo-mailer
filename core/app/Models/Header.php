@@ -29,7 +29,7 @@ class Header extends Model
     {
         $header = self::create([
             'mail_id'   => $mail->id,
-            'data'      => '[]'
+            'data'      => '""'
         ]);
 
         return $header;

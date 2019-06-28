@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\CampaignCreated;
+use App\Events\MailCreated;
+use App\Listeners\InitMailParts;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -17,6 +20,14 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        CampaignCreated::class => [
+
+        ],
+
+        MailCreated::class => [
+            InitMailParts::class
         ],
     ];
 

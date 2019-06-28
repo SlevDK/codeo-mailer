@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Events\MailCreated;
 use App\Http\Requests\Api\v1\Mails\MailStoreRequest;
 use App\Http\Requests\Api\v1\Mails\MailUpdateRequest;
 use App\Models\Campaign;
@@ -30,6 +31,7 @@ class MailController extends Controller
         $this->authorize('create', [Mail::class, $campaign]);
 
         $mail = Mail::initMail($campaign, $request->only('name'));
+        event(new MailCreated($mail));
 
         return response([
             'code'      => 200,
