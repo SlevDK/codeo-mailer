@@ -20,6 +20,8 @@ Route::post('/account/token-obtain', 'AuthController@login');
 // Authorized api requests
 Route::middleware('auth:api')->group(function() {
 
+    Route::get('/account', 'AccountController@show');
+
     Route::get('/manager/campaigns', 'CampaignController@index');
     Route::apiResource('/manager/campaign', 'CampaignController', ['except' => ['index']]); // should be campaigns?
 
