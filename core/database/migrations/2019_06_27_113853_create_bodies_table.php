@@ -21,7 +21,7 @@ class CreateBodiesTable extends Migration
 
             $table->timestamps();
 
-            $table->eengine = 'InnoDB';
+            $table->engine = 'InnoDB';
             $table->foreign('mail_id')
                 ->references('id')
                 ->on('mails')
