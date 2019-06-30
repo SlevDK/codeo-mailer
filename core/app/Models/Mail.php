@@ -62,6 +62,16 @@ class Mail extends Model
     }
 
     /**
+     * Mail settings
+     *
+     * @return HasOne
+     */
+    public function settings()
+    {
+        return $this->hasOne(MailSettings::class, 'mail_id');
+    }
+
+    /**
      * Create new mail
      *
      * @param Campaign $campaign

@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use App\Models\Body;
 use App\Models\Header;
+use App\Models\MailSettings;
 use App\Models\Topic;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class InitMailParts
 {
@@ -34,5 +33,6 @@ class InitMailParts
         Header::initHeader($mail);
         Topic::initTopic($mail);
         Body::initBody($mail);
+        MailSettings::initSettings($mail);
     }
 }
