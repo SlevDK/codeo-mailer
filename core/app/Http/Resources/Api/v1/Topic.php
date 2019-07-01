@@ -16,7 +16,7 @@ class Topic extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => $this->data
+            'data' => json_decode($this->data)
         ];
     }
 }

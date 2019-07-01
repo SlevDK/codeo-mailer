@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Header;
+namespace App\Http\Requests\Api\v1\Aliases;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
-class HeaderUpdateRequest extends FormRequest
+class ToAliasUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +27,7 @@ class HeaderUpdateRequest extends FormRequest
             'data'  => [
                 'required', 'json',
                 function($attr, $value, $fail) {
-                    return $this->checkHeaderData($value, $fail);
+                    return $this->checkTopicData($value, $fail);
                 }
             ]
         ];
@@ -42,15 +41,15 @@ class HeaderUpdateRequest extends FormRequest
      * @param $fail
      * @return mixed
      */
-    public function checkHeaderData($data, $fail)
+    protected function checkTopicData($data, $fail)
     {
-        $headers = json_decode($data, true);
-        $err_msg = 'Header data is incorrect';
+        $toAlias = json_decode($data, true);
+        $err_msg = 'Topic data is incorrect';
 
-        if(!is_array($headers))
+        if(!is_array($toAlias))
             return $fail($err_msg);
 
-        foreach($headers as $entity) {
+        foreach($toAlias as $entity) {
 
             // check 'content' -> present, 0 < len(content) < 255
             if(!isset($entity['content']) || strlen($entity['content']) < 1 || strlen($entity['content']) > 255)

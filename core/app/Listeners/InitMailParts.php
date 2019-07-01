@@ -3,8 +3,10 @@
 namespace App\Listeners;
 
 use App\Models\Body;
+use App\Models\FromAlias;
 use App\Models\Header;
 use App\Models\MailSettings;
+use App\Models\ToAlias;
 use App\Models\Topic;
 
 class InitMailParts
@@ -34,5 +36,7 @@ class InitMailParts
         Topic::initTopic($mail);
         Body::initBody($mail);
         MailSettings::initSettings($mail);
+        FromAlias::initToAlias($mail);
+        ToAlias::initToAlias($mail);
     }
 }

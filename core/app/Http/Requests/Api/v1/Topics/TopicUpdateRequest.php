@@ -47,6 +47,9 @@ class TopicUpdateRequest extends FormRequest
         $topic = json_decode($data, true);
         $err_msg = 'Topic data is incorrect';
 
+        if(!is_array($topic))
+            return $fail($err_msg);
+
         foreach($topic as $entity) {
 
             // check 'content' -> present, 0 < len(content) < 255

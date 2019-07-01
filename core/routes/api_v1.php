@@ -40,5 +40,11 @@ Route::middleware('auth:api')->group(function() {
     Route::get('/manager/mails/{mail_id}/settings', 'MailSettingsController@show');
     Route::put('/manager/mails/{id}/settings', 'MailSettingsController@update');
 
+    Route::get('/manager/mails/{mail_id}/to-aliases', 'ToAliasController@show');
+    Route::put('/manager/mails/{id}/to-aliases', 'ToAliasController@update');
+
+    Route::get('/manager/mails/{mail_id}/from-aliases', 'FromAliasController@show');
+    Route::put('/manager/mails/{id}/from-aliases', 'FromAliasController@update');
+
 });
 

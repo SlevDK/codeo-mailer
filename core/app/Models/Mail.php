@@ -72,6 +72,26 @@ class Mail extends Model
     }
 
     /**
+     * Mail to-aliases
+     *
+     * @return HasOne
+     */
+    public function toAlias()
+    {
+        return $this->hasOne(ToAlias::class, 'mail_id');
+    }
+
+    /**
+     * Mail from-aliases
+     *
+     * @return HasOne
+     */
+    public function fromAlias()
+    {
+        return $this->hasOne(FromAlias::class, 'mail_id');
+    }
+
+    /**
      * Create new mail
      *
      * @param Campaign $campaign

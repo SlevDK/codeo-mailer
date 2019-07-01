@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\v1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Header extends JsonResource
+class ToAlias extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,7 @@ class Header extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => json_decode($this->data)
+            'data'  => json_decode($this->data)
         ];
     }
 }
