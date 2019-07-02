@@ -29,7 +29,7 @@ class FromDomainController extends Controller
             'code'      => 20,
             'message'   => 'Success',
             'payload'   => new FromDomainResource($fromDomains)
-        ]);
+        ], 200);
     }
 
     /**
@@ -53,6 +53,6 @@ class FromDomainController extends Controller
             'code'      => 20,
             'message'   => 'Success',
             'payload'   => new FromDomainResource($fromDomains)
-        ]);
+        ], 200);
     }
 }

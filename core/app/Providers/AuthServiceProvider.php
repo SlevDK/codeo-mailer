@@ -6,13 +6,19 @@ use App\Guards\TokenJWTGuard;
 use App\Models\Body;
 use App\Models\Campaign;
 use App\Models\FromAlias;
+use App\Models\FromDomain;
+use App\Models\FromLogin;
 use App\Models\Mail;
+use App\Models\Maillist;
 use App\Models\MailSettings;
 use App\Models\ToAlias;
 use App\Models\Topic;
 use App\Policies\BodyPolicy;
 use App\Policies\CampaignPolicy;
 use App\Policies\FromAliasPolicy;
+use App\Policies\FromDomainPolicy;
+use App\Policies\FromLoginPolicy;
+use App\Policies\MaillistPolicy;
 use App\Policies\MailPolicy;
 use App\Policies\MailSettingsPolicy;
 use App\Policies\ToAliasPolicy;
@@ -35,6 +41,9 @@ class AuthServiceProvider extends ServiceProvider
         ToAlias::class  => ToAliasPolicy::class,
         FromAlias::class    => FromAliasPolicy::class,
         MailSettings::class => MailSettingsPolicy::class,
+        FromLogin::class    => FromLoginPolicy::class,
+        FromDomain::class   => FromDomainPolicy::class,
+        Maillist::class     => MaillistPolicy::class
     ];
 
     /**

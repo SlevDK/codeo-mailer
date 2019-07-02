@@ -25,6 +25,9 @@ Route::middleware('auth:api')->group(function() {
     Route::get('/manager/campaigns', 'CampaignController@index');
     Route::apiResource('/manager/campaign', 'CampaignController', ['except' => ['index']]); // should be campaigns?
 
+    Route::get('/manager/campaign/{id}/target-emails', 'MaillistController@show');  // should be campaigns?
+    Route::put('/manager/campaign/{id}/target-emails', 'MaillistController@update');    // should be campaigns?
+
     Route::post('/manager/campaign/{id}/mails', 'MailController@store');
     Route::apiResource('/manager/mails', 'MailController', ['except' => ['index', 'store']]);
 

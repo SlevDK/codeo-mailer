@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\CampaignCreated;
 use App\Events\MailCreated;
+use App\Listeners\InitCampaignParts;
 use App\Listeners\InitMailParts;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -23,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         CampaignCreated::class => [
-
+            InitCampaignParts::class
         ],
 
         MailCreated::class => [

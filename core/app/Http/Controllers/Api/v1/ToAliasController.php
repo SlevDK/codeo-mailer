@@ -29,7 +29,7 @@ class ToAliasController extends Controller
             'code'      => 20,
             'message'   => 'Success',
             'payload'   => new ToAliasResource($toAlias)
-        ]);
+        ], 200);
     }
 
     /**
@@ -53,6 +53,6 @@ class ToAliasController extends Controller
             'code'      => 20,
             'message'   => 'Success',
             'payload'   => new ToAliasResource($toAlias)
-        ]);
+        ], 200);
     }
 }

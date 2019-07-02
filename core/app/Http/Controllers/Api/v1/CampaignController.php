@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Events\CampaignCreated;
 use App\Http\Requests\Api\v1\Campaigns\CampaignStoreRequest;
 use App\Http\Requests\Api\v1\Campaigns\CampaignUpdateRequest;
 use App\Models\Campaign;
@@ -44,6 +45,7 @@ class CampaignController extends Controller
         $this->authorize('create', Campaign::class);
 
         $campaign = Campaign::initCampaign($request->only('name', 'note'));
+        event(new CampaignCreated($campaign));
 
         return response([
                 'status' => 20,

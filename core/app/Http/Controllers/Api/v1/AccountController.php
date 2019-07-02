@@ -19,6 +19,6 @@ class AccountController extends Controller
             'status'    => 20,
             'message'   => 'Success',
             'payload'   => new UserResource(auth('api')->user())
-        ]);
+        ], 200);
     }
 }

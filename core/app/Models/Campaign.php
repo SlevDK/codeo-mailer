@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Campaign extends Model
 {
@@ -44,6 +45,16 @@ class Campaign extends Model
     public function mails()
     {
         return $this->hasMany(Mail::class, 'campaign_id');
+    }
+
+    /**
+     * Campaign maillist
+     *
+     * @return HasOne
+     */
+    public function maillist()
+    {
+        return $this->hasOne(Maillist::class, 'campaign_id');
     }
 
     /**

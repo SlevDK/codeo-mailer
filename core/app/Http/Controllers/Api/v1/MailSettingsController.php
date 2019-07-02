@@ -29,7 +29,7 @@ class MailSettingsController extends Controller
             'code'  => 20,
             'message'   => 'Success',
             'payload'   => new MailSettingsResource($settings)
-        ]);
+        ], 200);
     }
 
     /**
@@ -53,6 +53,6 @@ class MailSettingsController extends Controller
             'code'  => 20,
             'message'   => 'Success',
             'payload'   => new MailSettingsResource($settings)
-        ]);
+        ], 200);
     }
 }

@@ -30,7 +30,7 @@ class FromLoginController extends Controller
             'code'      => 20,
             'message'   => 'Success',
             'payload'   => new FromLoginResource($fromLogins)
-        ]);
+        ], 200);
     }
 
     /**
@@ -54,6 +54,6 @@ class FromLoginController extends Controller
             'code'      => 20,
             'message'   => 'Success',
             'payload'   => new FromLoginResource($fromLogins)
-        ]);
+        ], 200);
     }
 }
