@@ -29,7 +29,7 @@ class ToAlias extends Model
     {
         $toAlias = self::create([
             'mail_id'   => $mail->id,
-            'data'      => '""'
+            'data'      => '[]'
         ]);
 
         return $toAlias;

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Header extends Model
+class FromDomain extends Model
 {
     /** @var array Guarded props */
     protected $guarded = ['id'];
@@ -20,18 +20,18 @@ class Header extends Model
     ];
 
     /**
-     * Create mail header
+     * Create mail from-domain
      *
      * @param Mail $mail
-     * @return Header
+     * @return mixed
      */
-    public static function initHeader(Mail $mail)
+    public static function initFromDomain(Mail $mail)
     {
-        $header = self::create([
+        $fromDomain = self::create([
             'mail_id'   => $mail->id,
             'data'      => '[]'
         ]);
 
-        return $header;
+        return $fromDomain;
     }
 }

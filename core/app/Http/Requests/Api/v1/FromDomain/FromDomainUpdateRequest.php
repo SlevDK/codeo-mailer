@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Aliases;
+namespace App\Http\Requests\Api\v1\FromDomain;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ToAliasUpdateRequest extends FormRequest
+class FromDomainUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -43,13 +43,13 @@ class ToAliasUpdateRequest extends FormRequest
      */
     protected function checkJsonData($data, $fail)
     {
-        $toAlias = json_decode($data, true);
+        $topic = json_decode($data, true);
         $err_msg = 'Topic data is incorrect';
 
-        if(!is_array($toAlias))
+        if(!is_array($topic))
             return $fail($err_msg);
 
-        foreach($toAlias as $entity) {
+        foreach($topic as $entity) {
 
             // check 'content' -> present, 0 < len(content) < 255
             if(!isset($entity['content']) || strlen($entity['content']) < 1 || strlen($entity['content']) > 255)

@@ -28,7 +28,7 @@ class TopicUpdateRequest extends FormRequest
             'data'  => [
                 'required', 'json',
                 function($attr, $value, $fail) {
-                    return $this->checkTopicData($value, $fail);
+                    return $this->checkJsonData($value, $fail);
                 }
             ]
         ];
@@ -42,7 +42,7 @@ class TopicUpdateRequest extends FormRequest
      * @param $fail
      * @return mixed
      */
-    protected function checkTopicData($data, $fail)
+    protected function checkJsonData($data, $fail)
     {
         $topic = json_decode($data, true);
         $err_msg = 'Topic data is incorrect';

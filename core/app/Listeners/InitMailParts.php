@@ -4,6 +4,8 @@ namespace App\Listeners;
 
 use App\Models\Body;
 use App\Models\FromAlias;
+use App\Models\FromDomain;
+use App\Models\FromLogin;
 use App\Models\Header;
 use App\Models\MailSettings;
 use App\Models\ToAlias;
@@ -31,12 +33,14 @@ class InitMailParts
     {
         $mail = $event->mail;
 
-        // create Mail -> Header, Body, Topic models
+        // create Mail parts -> Header, Body, Topic, etc
         Header::initHeader($mail);
         Topic::initTopic($mail);
         Body::initBody($mail);
         MailSettings::initSettings($mail);
         FromAlias::initToAlias($mail);
         ToAlias::initToAlias($mail);
+        FromLogin::initFromLogin($mail);
+        FromDomain::initFromDomain($mail);
     }
 }

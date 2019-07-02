@@ -28,7 +28,7 @@ class HeaderUpdateRequest extends FormRequest
             'data'  => [
                 'required', 'json',
                 function($attr, $value, $fail) {
-                    return $this->checkHeaderData($value, $fail);
+                    return $this->checkJsonData($value, $fail);
                 }
             ]
         ];
@@ -42,7 +42,7 @@ class HeaderUpdateRequest extends FormRequest
      * @param $fail
      * @return mixed
      */
-    public function checkHeaderData($data, $fail)
+    public function checkJsonData($data, $fail)
     {
         $headers = json_decode($data, true);
         $err_msg = 'Header data is incorrect';

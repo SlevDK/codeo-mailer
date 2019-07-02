@@ -29,7 +29,7 @@ class FromAlias extends Model
     {
         $fromAlias = self::create([
             'mail_id'   => $mail->id,
-            'data'      => '""'
+            'data'      => '[]'
         ]);
 
         return $fromAlias;

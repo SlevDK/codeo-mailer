@@ -92,6 +92,26 @@ class Mail extends Model
     }
 
     /**
+     * Mail from-domains
+     *
+     * @return HasOne
+     */
+    public function fromLogin()
+    {
+        return $this->hasOne(FromLogin::class, 'mail_id');
+    }
+
+    /**
+     * Mail from-logins
+     *
+     * @return HasOne
+     */
+    public function fromDomain()
+    {
+        return $this->hasOne(FromDomain::class, 'mail_id');
+    }
+
+    /**
      * Create new mail
      *
      * @param Campaign $campaign
