@@ -13,7 +13,8 @@ class MailSettings extends Model
     /** @var array Props that can be mass assigment */
     protected $fillable = [
         'mail_id', 'charset_randomize', 'dkim_signature', 'domain_key_signature', 'encoded_randomize',
-        'message_id_domain', 'mixer', 'random_lines', 'received', 'time_randomize', 'tz_randomize'
+        'message_id_domain', 'mixer', 'random_lines', 'received', 'time_randomize', 'tz_randomize',
+        'rotation_count', 'rotation_mode'
     ];
 
     /** @var array Model dates */

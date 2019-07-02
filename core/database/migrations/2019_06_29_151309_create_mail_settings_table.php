@@ -28,6 +28,8 @@ class CreateMailSettingsTable extends Migration
             $table->boolean('received')->default(false);
             $table->boolean('time_randomize')->default(false);
             $table->boolean('tz_randomize')->default(false);
+            $table->integer('rotation_count')->default(0);
+            $table->integer('rotation_mode')->default(0);
 
             $table->timestamps();
 

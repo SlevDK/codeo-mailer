@@ -20,12 +20,14 @@ class MailSettings extends JsonResource
             'dkim_signature'        => (bool) $this->dkim_signature,
             'domain_key_signature'  => (bool) $this->domain_key_signature,
             'encoded_randomize'     => (bool) $this->encoded_randomize,
-            'message_id_domain'     => (string) $this->message_id_domain,
             'mixer'                 => (bool) $this->mixer,
-            'random_lines'          => (integer) $this->random_lines,
             'received'              => (bool) $this->received,
             'time_randomize'        => (bool) $this->time_randomize,
-            'tz_randomize'          => (bool) $this->tz_randomize
+            'tz_randomize'          => (bool) $this->tz_randomize,
+            'rotation_count'        => (integer) $this->rotation_count,
+            'rotation_mode'         => (integer) $this->rotation_mode,
+            'random_lines'          => (integer) $this->random_lines,
+            'message_id_domain'     => (string) $this->message_id_domain,
         ];
     }
 }

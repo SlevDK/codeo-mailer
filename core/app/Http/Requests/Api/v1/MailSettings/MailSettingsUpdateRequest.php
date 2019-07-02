@@ -35,7 +35,9 @@ class MailSettingsUpdateRequest extends FormRequest
             'random_lines'          => ['integer', 'mix:0'],
             'received'              => ['boolean'],
             'time_randomize'        => ['boolean'],
-            'tz_randomize'          => ['boolean']
+            'tz_randomize'          => ['boolean'],
+            'rotation_count'        => ['integer'],
+            'rotation_mode'         => ['integer']
         ];
     }
 
