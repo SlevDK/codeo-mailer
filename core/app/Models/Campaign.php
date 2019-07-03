@@ -58,6 +58,46 @@ class Campaign extends Model
     }
 
     /**
+     * Campaign proxy settings
+     *
+     * @return HasOne
+     */
+    public function proxySettings()
+    {
+        return $this->hasOne(CampaignProxySettings::class, 'campaign_id');
+    }
+
+    /**
+     * Campaign from email settings
+     *
+     * @return HasOne
+     */
+    public function fromEmailSettings()
+    {
+        return $this->hasOne(CampaignFromEmailSettings::class, 'campaign_id');
+    }
+
+    /**
+     * Campaign randomizer settings
+     *
+     * @return HasOne
+     */
+    public function randomizerSettings()
+    {
+        return $this->hasOne(CampaignRandomizerSettings::class, 'campaign_id');
+    }
+
+    /**
+     * Campaign additional settings
+     *
+     * @return HasOne
+     */
+    public function additionalSettings()
+    {
+        return $this->hasOne(CampaignAdditionalSettings::class, 'campaign_id');
+    }
+
+    /**
      * Own by (user id) scope
      *
      * @param $query

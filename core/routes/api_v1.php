@@ -28,6 +28,18 @@ Route::middleware('auth:api')->group(function() {
     Route::get('/manager/campaign/{id}/target-emails', 'MaillistController@show');  // should be campaigns?
     Route::put('/manager/campaign/{id}/target-emails', 'MaillistController@update');    // should be campaigns?
 
+    Route::get('/manager/campaign/{id}/proxy-settings', 'CampaignProxySettingsController@show');
+    Route::put('/manager/campaign/{id}/proxy-settings', 'CampaignProxySettingsController@update');
+
+    Route::get('/manager/campaign/{id}/from-email-settings', 'CampaignFromEmailSettingsController@show');
+    Route::put('/manager/campaign/{id}/from-email-settings', 'CampaignFromEmailSettingsController@update');
+
+    Route::get('/manager/campaign/{id}/randomizer-settings', 'CampaignRandomizerSettingsController@show');
+    Route::put('/manager/campaign/{id}/randomizer-settings', 'CampaignRandomizerSettingsController@update');
+
+    Route::get('/manager/campaign/{id}/additional-settings', 'CampaignAdditionalSettingsController@show');
+    Route::put('/manager/campaign/{id}/additional-settings', 'CampaignAdditionalSettingsController@update');
+
     Route::post('/manager/campaign/{id}/mails', 'MailController@store');
     Route::apiResource('/manager/mails', 'MailController', ['except' => ['index', 'store']]);
 
