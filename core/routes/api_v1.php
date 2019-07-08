@@ -40,6 +40,8 @@ Route::middleware('auth:api')->group(function() {
     Route::get('/manager/campaign/{id}/additional-settings', 'CampaignAdditionalSettingsController@show');
     Route::put('/manager/campaign/{id}/additional-settings', 'CampaignAdditionalSettingsController@update');
 
+
+    /******************** MAILS ***********************/
     Route::post('/manager/campaign/{id}/mails', 'MailController@store');
     Route::apiResource('/manager/mails', 'MailController', ['except' => ['index', 'store']]);
 
@@ -66,6 +68,19 @@ Route::middleware('auth:api')->group(function() {
 
     Route::get('/manager/mails/{id}/from-logins', 'FromLoginController@show');
     Route::put('/manager/mails/{id}/from-logins', 'FromLoginController@update');
+
+    /**********************************************************/
+
+    /********************* DATABASES *****************************/
+    Route::apiResource('/databases/topics', 'Database\TopicController');
+    Route::apiResource('/databases/maillists', 'Database\MaillistController');
+    Route::apiResource('/databases/proxies', 'Database\ProxyController');
+    Route::apiResource('/databases/headers', 'Database\HeaderController');
+    Route::apiResource('/databases/from-domains', 'Database\FromDomainController');
+
+    Route::apiResource('/databases/files', 'Database\FileController');
+    Route::post('/databases/files/{directory}/', 'Database\FileController@storeToDirectory');
+    Route::delete('/databases/files/{directory}/{file}', 'Database\FileController@destroyFromDirectory');
 
 });
 
