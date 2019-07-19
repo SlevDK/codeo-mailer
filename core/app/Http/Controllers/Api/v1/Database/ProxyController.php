@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Database;
 
+use App\Http\Requests\Api\v1\Database\ProxyStoreRequest;
 use App\Http\Requests\Api\v1\Database\ProxyUpdateRequest;
 use App\Http\Resources\Api\v1\Database\ProxyCollection as DatabaseProxyCollectionResource;
 use App\Http\Resources\Api\v1\Database\ProxyData as DatabaseProxyDataResource;
@@ -33,11 +34,11 @@ class ProxyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param ProxyStoreRequest $request
      * @return Response
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(ProxyStoreRequest $request)
     {
         $this->authorize('create', Proxy::class);
 

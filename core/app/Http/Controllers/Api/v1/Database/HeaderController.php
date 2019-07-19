@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Database;
 
+use App\Http\Requests\Api\v1\Database\HeaderStoreRequest;
 use App\Http\Requests\Api\v1\Database\HeaderUpdateRequest;
 use App\Http\Resources\Api\v1\Database\HeaderCollection as DatabaseHeaderCollectionResource;
 use App\Http\Resources\Api\v1\Database\HeaderData as DatabaseHeaderDataResource;
@@ -33,11 +34,11 @@ class HeaderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param HeaderStoreRequest $request
      * @return Response
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(HeaderStoreRequest $request)
     {
         $this->authorize('create', Header::class);
 

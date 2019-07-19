@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Database;
 
+use App\Http\Requests\Api\v1\Database\MaillistStoreRequest;
 use App\Http\Requests\Api\v1\Database\MaillistUpdateRequest;
 use App\Http\Resources\Api\v1\Database\MaillistCollection as DatabaseMaillistCollectionResource;
 use App\Http\Resources\Api\v1\Database\MaillistData as DatabaseMaillistDataResource;
@@ -33,11 +34,11 @@ class MaillistController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param MaillistStoreRequest $request
      * @return Response
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(MaillistStoreRequest $request)
     {
         $this->authorize('create', Maillist::class);
 

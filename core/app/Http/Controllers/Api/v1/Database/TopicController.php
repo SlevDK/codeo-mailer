@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Database;
 
+use App\Http\Requests\Api\v1\Database\TopicStoreRequest;
 use App\Http\Requests\Api\v1\Database\TopicUpdateRequest;
 use App\Models\Database\Topic;
 use App\Http\Resources\Api\v1\Database\TopicData as DatabaseTopicDataResource;
@@ -33,11 +34,11 @@ class TopicController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param TopicStoreRequest $request
      * @return Response
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(TopicStoreRequest $request)
     {
         $this->authorize('create', Topic::class);
 

@@ -133,6 +133,7 @@ class FileController extends Controller
         return response([
             'code'      => '20',
             'message'   => 'Success',
+            'payload'   => $this->getDirData($directory),
         ], 200);
     }
 
@@ -155,6 +156,7 @@ class FileController extends Controller
         return response([
             'code'      => '20',
             'message'   => 'Success',
+            'payload'   => $this->getDirData($directory),
         ], 200);
     }
 

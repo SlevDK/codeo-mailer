@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Database;
 
+use App\Http\Requests\Api\v1\Database\FromDomainStoreRequest;
 use App\Http\Requests\Api\v1\Database\FromDomainUpdateRequest;
 use App\Http\Requests\Api\v1\Database\HeaderUpdateRequest;
 use App\Http\Resources\Api\v1\Database\FromDomainCollection as DatabaseFromDomainCollectionResource;
@@ -34,11 +35,11 @@ class FromDomainController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param FromDomainStoreRequest $request
      * @return Response
      * @throws AuthorizationException
      */
-    public function store(Request $request)
+    public function store(FromDomainStoreRequest $request)
     {
         $this->authorize('create', FromDomain::class);
 

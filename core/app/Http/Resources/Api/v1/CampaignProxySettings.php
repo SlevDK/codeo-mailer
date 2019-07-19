@@ -22,7 +22,7 @@ class CampaignProxySettings extends JsonResource
             'pause_time'    => $this->pause_time,
             'ssl_limit'     => $this->ssl_limit,
             'thread_limit'  => $this->thread_limit,
-            'proxy_data'    => $this->proxy_data
+            'proxy_data'    => json_encode($this->proxy_data)
         ];
     }
 }
